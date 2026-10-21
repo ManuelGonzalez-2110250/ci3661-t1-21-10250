@@ -120,7 +120,16 @@ duracion x y  =
 
 -- B1
 promedioSobreUmbral :: Double -> [Double] -> Maybe Double
-promedioSobreUmbral = undefined
+promedioSobreUmbral _ [] = Nothing
+promedioSobreUmbral x xs = 
+  let acum = foldl (\acc y -> if(x < y) then acc + y else acc) 0.0 xs
+      nMax = foldl (\acc y -> if(x < y) then acc + 1 else acc) 0.0 xs
+      tot = (acum / nMax)
+      
+  in if (nMax == 0.0)
+   then Nothing
+   else
+    Just tot
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
