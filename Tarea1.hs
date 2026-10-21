@@ -5,7 +5,8 @@
 --  Carnet: 21-10250l
 --
 --  Declaración de uso de herramientas de IA (obligatoria, ver enunciado):
---  De momento solo pegarme cabezasos por no empezar antes
+--  De momento se ha usado para consultar sobre por que había un bucle infinito 
+--  en la función esPalindormo (no podía modificar xs en xs)
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
 --  firmas de las funciones. Puedes agregar todas las funciones auxiliares
@@ -34,7 +35,29 @@ import Data.Char (isAlphaNum, isDigit, toLower, digitToInt)
 
 -- A1
 esPalindromo :: String -> Bool
-esPalindromo = undefined
+esPalindromo [] = True
+esPalindromo [x] = True
+esPalindromo (x:xs) =
+ if (isAlphaNum (x)) 
+ then 
+  let y = last(xs)
+      n = length(xs)
+      xl = take (n - 1) xs
+  in 
+    if(isAlphaNum(y))
+     then if(toLower(x) == toLower(y))
+      then 
+       esPalindromo xl
+      else
+       False
+     else
+      let xi = x:xl
+      in esPalindromo xi
+   
+  
+   else
+  esPalindromo xs
+
 
 -- A2
 -- Explica aquí, en dos o tres líneas, por qué tu solución recorre la
@@ -49,7 +72,9 @@ mayorYMenor (x:xs)
  | otherwise = Just (mayor,menor)
  where Just (mayor,menor) = mayorYMenor xs
 
--- A3
+-- En el mismo recorrdio verifica si es mayor o menor, y cambia la tupla si lo es. 
+-- esto se debe a que nunca se hace otra llamada recursiva para que maneje los menores\mayores
+-- por separado.
 leerHora :: String -> Either String (Int, Int)
 leerHora = undefined
 
