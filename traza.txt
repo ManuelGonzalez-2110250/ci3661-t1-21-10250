@@ -1,0 +1,31 @@
+Problema 7- 
+para el carnet 21-10250 los últimos dígitos son  d = [0,2,5,0]
+a)foldr:
+	0-(2-(5-(0-0)))
+	0-(2-(5-0))
+	0-(2-5)
+	0-(-3)
+	3
+	
+b) foldl
+	(((0-0)-2)-5)-0
+	((0-2)-5)-0
+	((-2)-5)-0
+	(-7)-0
+	-7
+
+c) mifoldl
+	(x-0)
+	(x-5)-0
+	((x-2)-5)-0
+	(((x-0)-2)-5)-0
+	(((0-0)-2)-5)-0
+	(((0)-2)-5)-0
+	((-2)-5)-0
+	(-7)-0
+	-7
+d) Por lo visto en clase se sabe que a) y b) (foldl y foldr) dan diferentes resultados por
+como se asocia el -, vease (5-0) = 5 y (2-5) = 3, mientras que (0-2) = -2 y (-2-5) = -7 esto es 
+debido a que la funcion "-" no es conmutativa y, aunque en este caso no aplica, se requiere
+el elemento neutro como valor inicial, por lo que al solo cumplirse una de las 2 condiciones
+El resultado de foldr y foldl son distintos.
