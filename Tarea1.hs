@@ -8,6 +8,7 @@
 --  De momento se ha usado para consultar sobre por que había un bucle infinito 
 --  en la función esPalindormo (no podía modificar xs en xs)
 --  Tambien sobre que significaba la pista de A3
+--  Adicionalmente para B2 buscando como iterar sobre una lista con foldl
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
 --  firmas de las funciones. Puedes agregar todas las funciones auxiliares
@@ -133,10 +134,31 @@ promedioSobreUmbral x xs =
 
 -- B2
 movimientosCaballo :: (Int, Int) -> [(Int, Int)]
-movimientosCaballo = undefined
+movimientosCaballo (0,0) = []
+movimientosCaballo (x,y) =
+ if(x > 8) then []
+ else if (y > 8) then []
+ else 
+  let allPos = [(i, j) | i <- [1..8], j <- [1..8]]
+      posiblePostMay = filter (\(a,b) -> a < x + 3 && b < y +3) allPos
+      posiblePost = filter (\(a,b) -> a > x - 3 && a > y - 3) posiblePostMay
+      semiPosiblePost = filter (\(a,b) -> ((a /= x) && (b /= y))) posiblePost
+      total = filter (\(a,b) -> abs (x-a) + abs (y-b) == 3) semiPosiblePost
+  in total
+  
 
 enDosSaltos :: (Int, Int) -> Int
-enDosSaltos = undefined
+enDosSaltos (0,0) = 0
+enDosSaltos (x,y)=
+ if(x > 8) then 0
+ else if (y > 8) then 0
+ else 
+  let posP1 = movimientosCaballo(x,y)
+      allPos = [(i, j) | i <- [1..8], j <- [1..8]]
+      --se consigue la lista de todas las posiciones menos los movimientos posibles
+      movs = foldl(\acc pos -> movimientosCaballo pos ++ acc) [] posP1
+      movSinRepe = filter (\t -> elem t movs) allPos
+  in length movSinRepe
 
 -- B3
 miMap :: (a -> b) -> [a] -> [b]
