@@ -9,6 +9,9 @@
 --  en la función esPalindormo (no podía modificar xs en xs)
 --  Tambien sobre que significaba la pista de A3
 --  Adicionalmente para B2 buscando como iterar sobre una lista con foldl
+--  Como el objetivo es evitar que se use codigo que no es nuestro
+--  comento que encontré el "Foldl as foldr" en https://wiki.haskell.org/Foldl_as_foldr
+--  mientras buscaba ideas de como usar el foldr
 -- =====================================================================
 --  No cambies el nombre del módulo ni la lista de exportación, ni las
 --  firmas de las funciones. Puedes agregar todas las funciones auxiliares
@@ -162,10 +165,11 @@ enDosSaltos (x,y)=
 
 -- B3
 miMap :: (a -> b) -> [a] -> [b]
-miMap = undefined
+miMap f xs = foldr(\x acc -> f(x) : acc) [] xs
+
 
 miFilter :: (a -> Bool) -> [a] -> [a]
-miFilter = undefined
+miFilter f xs = foldr(\x xs -> if(f(x)) then x:xs else xs) [] xs
 
 miFoldl :: (b -> a -> b) -> b -> [a] -> b
-miFoldl = undefined
+miFoldl f a bs = foldr (\b g x -> g (f x b)) id bs a
